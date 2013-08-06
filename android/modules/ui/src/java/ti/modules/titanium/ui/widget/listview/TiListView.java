@@ -227,6 +227,18 @@ public class TiListView extends TiUIView {
 		wrapper.setFocusableInTouchMode(false);
 		listView = new ListView(activity);
 		listView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+
+
+		// *** edited by QIN CHUAN @ 20130712 ***
+		// **************************************
+		// set divider to be null
+		listView.setDivider(null);
+		listView.setDividerHeight(0);
+		// **************************************
+
+
+
 		wrapper.addView(listView);
 		adapter = new TiBaseAdapter(activity);
 		
