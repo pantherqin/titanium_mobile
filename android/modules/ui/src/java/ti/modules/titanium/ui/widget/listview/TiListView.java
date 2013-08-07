@@ -270,6 +270,31 @@ public class TiListView extends TiUIView {
 		
 		setNativeView(wrapper);
 	}
+
+	
+	// *** edited by QIN CHUAN @ 20130719 ***
+	// **************************************
+	public int getScrollX() {
+		return listView.getScrollX();
+	}
+
+	public int getScrollY() {
+		return listView.getScrollY();
+	}
+
+	public int getFirstVisibleItemIndex() {
+		int _index = listView.getFirstVisiblePosition();
+
+		return _index;
+	}
+	public int getFirstVisibleItemOffset() {
+		View view = listView.getChildAt(0);
+		int _top = (view == null) ? 0 : view.getTop();
+
+		return _top;
+	}
+	// **************************************
+
 	
 	public void setHeaderTitle(String title) {
 		TextView textView = (TextView) headerView.findViewById(titleId);
