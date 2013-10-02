@@ -102,7 +102,7 @@ DEFINE_DEF_BOOL_PROP(suppressReturn,YES);
 		
   		// *** edited by QIN CHUAN @ 20131002 ***
   		// **************************************
-
+		
   		/*
   		 *	previous code from Titanium
   		 */
