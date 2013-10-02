@@ -96,7 +96,25 @@ DEFINE_DEF_BOOL_PROP(suppressReturn,YES);
 	{
         [self contentsWillChange];
 		[self replaceValue:newValue forKey:@"value" notification:NO];
-		[self fireEvent:@"change" withObject:[NSDictionary dictionaryWithObject:newValue forKey:@"value"]];
+
+
+
+		
+  		// *** edited by QIN CHUAN @ 20131002 ***
+  		// **************************************
+
+  		/*
+  		 *	previous code from Titanium
+  		 */
+  		// [self fireEvent:@"change" withObject:[NSDictionary dictionaryWithObject:newValue forKey:@"value"]];
+
+  		/*
+  		 *	replacement code
+  		 */
+  		NSNumber *contentHeight = [(TiUITextWidget*)[self view] getContentHeight];
+
+		[self fireEvent:@"change" withObject:[NSDictionary dictionaryWithObjectsAndKeys:newValue, @"value", contentHeight, @"contentHeight", nil]];
+		// **************************************
 	}
 }
 
