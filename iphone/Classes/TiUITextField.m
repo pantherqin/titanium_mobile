@@ -227,6 +227,25 @@
 	return [super isFirstResponder];
 }
 
+// *** edited by QIN CHUAN @ 20131002 ***
+// **************************************
+- (NSNumber*) getContentHeight
+{
+    /*
+     *  sample
+     */
+    UITextView* ourView = (UITextView*)[self textWidgetView];
+
+    CGRect wrapperFrame;
+    wrapperFrame.size = [ourView contentSize];
+
+    return [NSNumber numberWithFloat:wrapperFrame.size.height];
+}
+// **************************************
+
+
+
+
 -(void)setLeftView:(UIView*)value
 {
 	if ((value != nil) && (paddingLeft > 0.5))
