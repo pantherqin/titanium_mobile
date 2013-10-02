@@ -182,9 +182,9 @@
 	if ([ourProxy suppressFocusEvents]) {
 		return;
 	}
-
+	
 	[[TiApp controller] didKeyboardFocusOnProxy:(TiViewProxy<TiKeyboardFocusableView> *)ourProxy];
-
+	
 	if ([ourProxy _hasListeners:@"focus"])
 	{
 		[ourProxy fireEvent:@"focus" withObject:[NSDictionary dictionaryWithObject:value forKey:@"value"] propagate:NO];
