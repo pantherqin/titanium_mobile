@@ -227,24 +227,6 @@
 	return [super isFirstResponder];
 }
 
-// *** edited by QIN CHUAN @ 20131002 ***
-// **************************************
-- (NSNumber*) getContentHeight
-{
-    /*
-     *  sample
-     */
-    UITextView* ourView = (UITextView*)[self textWidgetView];
-
-    CGRect wrapperFrame;
-    wrapperFrame.size = [ourView contentSize];
-
-    return [NSNumber numberWithFloat:wrapperFrame.size.height];
-}
-// **************************************
-
-
-
 
 -(void)setLeftView:(UIView*)value
 {
@@ -583,6 +565,23 @@
 {
 	return [[self textWidgetView] sizeThatFits:CGSizeMake(value, 0)].height;
 }
+
+// *** edited by QIN CHUAN @ 20131002 ***
+// **************************************
+- (NSNumber*) getContentHeight
+{
+    /*
+     *  sample
+     */
+    // UITextView* ourView = (UITextView*)[self textWidgetView];
+
+    // CGRect wrapperFrame;
+    // wrapperFrame.size = [ourView contentSize];
+
+    // return [NSNumber numberWithFloat:wrapperFrame.size.height];
+    return [NSNumber numberWithFloat:0.0];
+}
+// **************************************
 
 
 	
