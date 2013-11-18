@@ -97,15 +97,49 @@ public class TiImageView extends ViewGroup implements Handler.Callback, OnClickL
 			@Override
 			public boolean onScroll(MotionEvent e1, MotionEvent e2, float dx, float dy)
 			{
-				if (zoomControls.getVisibility() == View.VISIBLE) {
-					changeMatrix.postTranslate(-dx, -dy);
-					imageView.setImageMatrix(getViewMatrix());
-					requestLayout();
-					scheduleControlTimeout();
-					return true;
-				} else {
-					return false;
-				}
+				// if (zoomControls.getVisibility() == View.VISIBLE) {
+				// 	changeMatrix.postTranslate(-dx, -dy);
+				// 	imageView.setImageMatrix(getViewMatrix());
+				// 	requestLayout();
+				// 	scheduleControlTimeout();
+				// 	return true;
+				// } else {
+				// 	return false;
+				// }
+
+
+                
+                // *** edited by QIN CHUAN @ 20131112 ***
+                // **************************************
+                boolean retValue = false;
+
+                Log.d(TAG, "onScroll : " + Float.toString(dx) + " ------------- " + Float.toString(dy) + "           scaleFactor : " + scaleFactor);
+                Log.d(TAG, Float.toString(scaleFactor));
+
+                // Allow scrolling only if the image is zoomed in
+                // if (zoomControls.getVisibility() == View.VISIBLE && scaleFactor > 1) {
+                if (zoomControls.getVisibility() == View.VISIBLE && scaleFactor > 0) {
+                    // Log.d(TAG, " zoomControls.getVisibility() == VISIBLE ");
+                    // Log.d(TAG, Float.toString(scaleFactor));
+
+                    // check if image scroll beyond its borders
+                    if (!checkImageScrollBeyondBorders(dx, dy)) {
+
+                        Log.d(TAG, "!checkImageScrollBeyondBorders == true");
+
+                        changeMatrix.postTranslate(-dx, -dy);
+
+                        imageView.setImageMatrix(getViewMatrix());
+
+                        requestLayout();
+
+                        scheduleControlTimeout();
+
+                        retValue = true;
+                    }
+                }
+				return retValue;
+                // **************************************
 			}
 
 			@Override
@@ -116,6 +150,7 @@ public class TiImageView extends ViewGroup implements Handler.Callback, OnClickL
 			}
 		});
 		gestureDetector.setIsLongpressEnabled(false);
+
 
 		zoomControls = new ZoomControls(context);
 		addView(zoomControls);
@@ -231,6 +266,8 @@ public class TiImageView extends ViewGroup implements Handler.Callback, OnClickL
 
 	private void onViewChanged(float dscale)
 	{
+        Log.d(TAG, "onViewChanged :: " + Float.toString(dscale));
+
 		updateChangeMatrix(dscale);
 		manageControls();
 		requestLayout();
@@ -294,11 +331,23 @@ public class TiImageView extends ViewGroup implements Handler.Callback, OnClickL
 
 	private void updateChangeMatrix(float dscale)
 	{
+        // Log.d(TAG, "updateChangeMatrix :: dscale : " + Float.toString(dscale));
+        // Log.d(TAG, "updateChangeMatrix :: scaleFactor : " + Float.toString(scaleFactor));
+        
+
 		changeMatrix.reset();
 		scaleFactor += dscale;
+
+        // Log.d(TAG, "updateChangeMatrix :: scaleFactor : " + Float.toString(scaleFactor));
+
+        // Log.d(TAG, "updateChangeMatrix :: scaleMin : " + Float.toString(scaleMin) + "    scaleMax : " + Float.toString(scaleMax));
+
 		scaleFactor = Math.max(scaleFactor, scaleMin);
 		scaleFactor = Math.min(scaleFactor, scaleMax);
+
 		changeMatrix.postScale(scaleFactor, scaleFactor, getWidth() / 2, getHeight() / 2);
+
+        Log.d(TAG, "updateChangeMatrix :: new scaleFactor : " + Float.toString(scaleFactor));
 	}
 
 	private Matrix getViewMatrix()
@@ -426,4 +475,42 @@ public class TiImageView extends ViewGroup implements Handler.Callback, OnClickL
 		this.orientation = orientation;
 		updateScaleType();
 	}
+
+
+    // *** edited by QIN CHUAN @ 20131112 ***
+    // **************************************
+    private boolean checkImageScrollBeyondBorders(float dx, float dy)
+    {
+        float[] matrixValues = new float[9];
+        Matrix m = new Matrix(changeMatrix);
+
+        // Apply the translation
+        m.postTranslate(-dx, -dy);
+        m.getValues(matrixValues);
+
+        // Image can move only the extra width or height that is available
+        // after scaling from the original width or height
+        float scaledAdditionalHeight = imageView.getHeight() * (matrixValues[4] - 1);
+        float scaledAdditionalWidth = imageView.getWidth() * (matrixValues[0] - 1);
+
+        if (matrixValues[5] > -scaledAdditionalHeight && matrixValues[5] < 0 && matrixValues[2] > -scaledAdditionalWidth && matrixValues[2] < 0) {
+            return false;
+        }
+        return true;
+    }
+    // **************************************
+
+
+
+    // *** edited by QIN CHUAN @ 20131113 ***
+    // **************************************
+    public void setZoomScale(float scale)
+    {
+        onViewChanged(scale - scaleFactor);
+    }
+    public float getZoomScale()
+    {
+        return scaleFactor;
+    }
+    // **************************************
 }

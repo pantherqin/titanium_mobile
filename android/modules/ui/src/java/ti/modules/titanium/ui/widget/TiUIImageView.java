@@ -81,6 +81,11 @@ public class TiUIImageView extends TiUIView implements OnLifecycleEvent, Handler
 	private static final int START = 10002;
 	private static final int STOP = 10003;
 
+	// *** edited by QIN CHUAN @ 20131113 ***
+    // **************************************
+	private static final int SET_ZOOMSCALE = 10010;
+	// **************************************
+
 	// This handles the memory cache of images.
 	private TiImageLruCache mMemoryCache = TiImageLruCache.getInstance();
 
@@ -210,6 +215,22 @@ public class TiUIImageView extends TiUIView implements OnLifecycleEvent, Handler
 		case STOP:
 			handleStop();
 			return true;
+
+
+		// *** edited by QIN CHUAN @ 20131113 ***
+	    // **************************************
+		case SET_ZOOMSCALE:
+			AsyncResult result2 = (AsyncResult) msg.obj;
+			float _scale = (Float) result2.getArg();
+
+			TiImageView view = getView();
+			if (view != null) {
+				view.setZoomScale(_scale);
+			}
+
+			result2.setResult(null);
+			return true;
+		// **************************************
 			
 		default: return false;
 		
@@ -886,6 +907,30 @@ public class TiUIImageView extends TiUIView implements OnLifecycleEvent, Handler
 	{
 		this.reverse = reverse;
 	}
+
+	// *** edited by QIN CHUAN @ 20131113 ***
+    // **************************************
+	public void setZoomScale(float scale)
+	{
+		if (!TiApplication.isUIThread()) {
+
+			Log.d(TAG, "NOT IN MAIN UI THREAD!!!");
+			// TiMessenger.sendBlockingMainMessage(mainHandler.obtainMessage(SET_IMAGE), bitmap);
+			TiMessenger.sendBlockingMainMessage(mainHandler.obtainMessage(SET_ZOOMSCALE), scale);
+		} else {
+			TiImageView view = getView();
+
+			if (view != null) {
+				view.setZoomScale(scale);
+			}
+		}
+	}
+	public float getZoomScale()
+	{
+		TiImageView view = getView();
+		return view.getZoomScale();
+	}
+	// **************************************
 
 	public TiBlob toBlob()
 	{
