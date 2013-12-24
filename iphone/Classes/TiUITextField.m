@@ -575,6 +575,27 @@
 }
 
 
+
+
+
+
+// *** edited by QIN CHUAN @ 20131002 ***
+// **************************************
+- (NSNumber*) getContentHeight
+{
+    /*
+     *  sample
+     */
+    // UITextView* ourView = (UITextView*)[self textWidgetView];
+
+    // CGRect wrapperFrame;
+    // wrapperFrame.size = [ourView contentSize];
+
+    // return [NSNumber numberWithFloat:wrapperFrame.size.height];
+    return [NSNumber numberWithFloat:0.0];
+}
+// **************************************
+
 	
 @end
 

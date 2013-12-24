@@ -167,7 +167,44 @@ public class ListViewProxy extends TiViewProxy {
 			}
 		}
 	}
+
+
+
+
+
+	// *** edited by QIN CHUAN @ 20130719 ***
+	// **************************************
+	@Kroll.method @Kroll.getProperty
+	public int getScrollY() {
+		TiUIView listView = peekView();
+		if (listView != null) {
+			return ((TiListView) listView).getScrollY();
+		}
+		return -1;
+	}
+
+	@Kroll.method @Kroll.getProperty
+	public int getFirstVisibleItemIndex() {
+		TiUIView listView = peekView();
+		if (listView != null) {
+			return ((TiListView) listView).getFirstVisibleItemIndex();
+		}
+		return -1;
+	}
+
+	@Kroll.method @Kroll.getProperty
+	public int getFirstVisibleItemOffset() {
+		TiUIView listView = peekView();
+		if (listView != null) {
+			return ((TiListView) listView).getFirstVisibleItemOffset();
+		}
+		return -1;
+	}
+	// **************************************
+
+
 	
+
 
 	@Override
 	public boolean handleMessage(final Message msg) 	{

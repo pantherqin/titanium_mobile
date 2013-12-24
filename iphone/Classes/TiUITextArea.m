@@ -197,6 +197,30 @@
     return [super isFirstResponder];
 }
 
+
+
+
+
+// *** edited by QIN CHUAN @ 20131002 ***
+// **************************************
+- (NSNumber*) getContentHeight
+{
+    /*
+     *  sample
+     */
+    UITextView* ourView = (UITextView*)[self textWidgetView];
+
+    CGRect wrapperFrame;
+    wrapperFrame.size = [ourView contentSize];
+
+    return [NSNumber numberWithFloat:wrapperFrame.size.height];
+}
+// **************************************
+
+
+
+
+
 //TODO: scrollRangeToVisible
 
 #pragma mark UITextViewDelegate

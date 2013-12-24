@@ -182,6 +182,19 @@ static TiViewProxy * FindViewProxyWithBindIdContainingPoint(UIView *view, CGPoin
     if ([_tableView superview] != self) {
         [self addSubview:_tableView];
     }
+
+
+
+
+    // *** edited by QIN CHUAN @ 20130712 ***
+    // **************************************
+    [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    // **************************************
+
+
+
+    
+
     return _tableView;
 }
 

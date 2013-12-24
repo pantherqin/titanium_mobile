@@ -98,4 +98,18 @@ public class ImageViewProxy extends ViewProxy
 	{
 		return "Ti.UI.ImageView";
 	}
+
+
+	
+	// *** edited by QIN CHUAN @ 20131113 ***
+    // **************************************
+	@Kroll.setProperty(runOnUiThread=true) @Kroll.method(runOnUiThread=true)
+	public void setZoomScale(float scale) {
+		getImageView().setZoomScale(scale);
+	}
+	@Kroll.method
+	public float getZoomScale() {
+		return getImageView().getZoomScale();
+	}
+	// **************************************
 }

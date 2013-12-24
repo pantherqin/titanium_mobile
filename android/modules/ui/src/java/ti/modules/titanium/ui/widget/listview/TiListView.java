@@ -288,6 +288,22 @@ public class TiListView extends TiUIView implements OnSearchChangeListener {
 		wrapper.setFocusableInTouchMode(false);
 		listView = new ListView(activity);
 		listView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+
+
+
+
+		// *** edited by QIN CHUAN @ 20130712 ***
+		// **************************************
+		// set divider to be null
+		listView.setDivider(null);
+		listView.setDividerHeight(0);
+		// **************************************
+
+
+
+
+
 		wrapper.addView(listView);
 		adapter = new TiBaseAdapter(activity);
 		
@@ -319,6 +335,40 @@ public class TiListView extends TiUIView implements OnSearchChangeListener {
 		this.wrapper = wrapper;
 		setNativeView(wrapper);
 	}
+
+
+
+	
+
+
+
+	// *** edited by QIN CHUAN @ 20130719 ***
+	// **************************************
+	public int getScrollX() {
+		return listView.getScrollX();
+	}
+
+	public int getScrollY() {
+		return listView.getScrollY();
+	}
+
+	public int getFirstVisibleItemIndex() {
+		int _index = listView.getFirstVisiblePosition();
+
+		return _index;
+	}
+	public int getFirstVisibleItemOffset() {
+		View view = listView.getChildAt(0);
+		int _top = (view == null) ? 0 : view.getTop();
+
+		return _top;
+	}
+	// **************************************
+
+
+
+
+	
 	
 	public String getSearchText() {
 		return searchText;
